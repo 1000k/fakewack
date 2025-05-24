@@ -1,5 +1,5 @@
 "use client";
-
+import { generateContent } from '@/lib/genai';
 import { useState, useEffect } from 'react';
 
 interface CreatePostModalProps {
@@ -22,10 +22,11 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
     };
   }, [isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // ここに投稿処理を追加
     console.log('投稿内容:', content);
+    const response = await generateContent(content);
+    console.log('生成されたコメント:', response);
     setContent('');
     onClose();
   };
@@ -62,7 +63,6 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
               onChange={(e) => setContent(e.target.value)}
               placeholder="今なにしてる？"
               className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              rows={6}
               required
               autoFocus
             />
