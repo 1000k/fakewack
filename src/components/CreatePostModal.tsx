@@ -34,18 +34,19 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[1000]"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        zIndex: 1000
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
@@ -53,7 +54,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
         }
       }}
     >
-      <div className="bg-white rounded-lg w-full max-w-2xl p-6 relative shadow-xl" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
+      <div className="bg-white rounded-lg w-full max-w-2xl p-6 relative shadow-xl z-[1001]" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
         <h2 className="text-xl font-bold mb-4">新規投稿</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
