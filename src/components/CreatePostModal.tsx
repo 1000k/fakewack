@@ -34,7 +34,6 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
       style={{
         position: 'fixed',
         top: 0,
@@ -46,6 +45,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         zIndex: 1000
       }}
       onClick={(e) => {
@@ -54,8 +54,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
         }
       }}
     >
-      <div className="bg-white rounded-lg w-full max-w-2xl p-6 relative shadow-xl z-[1001]" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
-        <h2 className="text-xl font-bold mb-4">新規投稿</h2>
+      <div className="bg-white rounded-lg w-full max-w-2xl p-4 relative shadow-xl z-[1001] overflow-y-auto max-h-[90vh]">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <textarea
@@ -72,13 +71,13 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="p-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
               キャンセル
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+              className="p-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
               disabled={!content.trim()}
             >
               投稿する
