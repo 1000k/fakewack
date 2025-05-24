@@ -62,7 +62,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="今なにしてる？"
-              className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full p-4 border border-gray-500 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 focus:ring-2 focus:outline-none"
               required
               autoFocus
             />
@@ -71,13 +71,13 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
             <button
               type="button"
               onClick={onClose}
-              className="p-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="p-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none "
             >
               キャンセル
             </button>
             <button
               type="submit"
-              className="p-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+              className="p-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none disabled:opacity-50"
               disabled={!content.trim()}
             >
               投稿する
