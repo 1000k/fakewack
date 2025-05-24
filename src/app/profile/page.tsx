@@ -1,8 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Footer from '@/components/footer';
 
 const user = {
   username: 'username',
@@ -14,7 +10,6 @@ const user = {
 };
 
 export default function Profile() {
-  const router = useRouter();
   const userPosts = [
     { 
       id: 1, 
@@ -41,22 +36,6 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* ヘッダー */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-2xl mx-auto px-4 py-4 flex justify-between items-center">
-          <button 
-            onClick={() => router.back()}
-            className="p-1 rounded-full hover:bg-gray-100"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          </button>
-          <h1 className="text-xl font-bold">プロフィール</h1>
-          <div className="w-6"></div> {/* スペース確保のための空のdiv */}
-        </div>
-      </header>
-
       {/* プロフィール情報 */}
       <div className="bg-white pt-4 pb-6 border-b">
         <div className="max-w-2xl mx-auto px-4">
@@ -134,9 +113,6 @@ export default function Profile() {
           </div>
         ))}
       </div>
-
-      {/* フッターナビゲーション */}
-      <Footer /> 
     </div>
   );
 }
