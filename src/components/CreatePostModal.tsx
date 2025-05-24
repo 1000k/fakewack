@@ -1,6 +1,7 @@
 "use client";
-import { generateContent } from '@/lib/genai';
+import { createPost } from '@/actions';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -10,6 +11,8 @@ interface CreatePostModalProps {
 export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProps) {
   const [content, setContent] = useState('');
   const [isMounted, setIsMounted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   console.log('Modal rendering, isOpen:', isOpen, 'isMounted:', isMounted);
 
@@ -24,11 +27,28 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('投稿内容:', content);
-    const response = await generateContent(content);
-    console.log('生成されたコメント:', response);
-    setContent('');
-    onClose();
+    if (!content.trim() || isSubmitting) return;
+    
+    setIsSubmitting(true);
+    try {
+      // テスト用にユーザーIDを1に設定（実際のアプリでは認証情報から取得）
+      const userId = 1;
+      const result = await createPost(content, userId);
+      
+      if (result.success) {
+        setContent('');
+        onClose();
+        // ページをリフレッシュして新しい投稿を表示
+        router.refresh();
+      } else {
+        alert('投稿に失敗しました: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('予期せぬエラーが発生しました');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isOpen || !isMounted) return null;
@@ -78,9 +98,9 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
             <button
               type="submit"
               className="p-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none disabled:opacity-50"
-              disabled={!content.trim()}
+              disabled={!content.trim() || isSubmitting}
             >
-              投稿する
+              {isSubmitting ? '投稿中...' : '投稿する'}
             </button>
           </div>
         </form>

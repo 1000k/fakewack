@@ -20,6 +20,7 @@ const formatTimeAgo = (date: Date): string => {
   return `${diffInDays}日前`;
 };
 
+// ユーザーフィード
 export default async function Home() {
   // データベースから投稿を取得
   const posts = await prisma.post.findMany({
