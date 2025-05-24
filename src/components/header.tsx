@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { IconDummyUser } from "./icons";
 
 export default function Header() {
   return (
@@ -12,7 +13,7 @@ export default function Header() {
           </svg>
         </button>
         <Link href="/profile" className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
-          <span className="text-gray-600 font-medium">P</span>
+          <IconDummyUser name="P" />
         </Link>
       </div>
     </div>
