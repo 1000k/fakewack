@@ -1,5 +1,5 @@
-"use client";
-import { createPost } from '@/actions';
+'use client';
+import { createPost } from '@/lib/actions';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -8,7 +8,10 @@ interface CreatePostModalProps {
   onClose: () => void;
 }
 
-export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProps) {
+export default function CreatePostModal({
+  isOpen,
+  onClose,
+}: CreatePostModalProps) {
   const [content, setContent] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,13 +31,13 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim() || isSubmitting) return;
-    
+
     setIsSubmitting(true);
     try {
       // テスト用にユーザーIDを1に設定（実際のアプリでは認証情報から取得）
       const userId = 1;
       const result = await createPost(content, userId);
-      
+
       if (result.success) {
         setContent('');
         onClose();
@@ -54,7 +57,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
   if (!isOpen || !isMounted) return null;
 
   return (
-    <div 
+    <div
       style={{
         position: 'fixed',
         top: 0,
@@ -67,7 +70,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        zIndex: 1000
+        zIndex: 1000,
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
@@ -76,7 +79,13 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
       }}
     >
       <div className="bg-white rounded-lg w-full max-w-2xl p-4 relative shadow-xl z-[1001] overflow-y-auto max-h-[90vh]">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
+          <div
+            className={isSubmitting ? 'opacity-50 pointer-events-none' : ''}
+          ></div>
           <div>
             <textarea
               value={content}
@@ -85,6 +94,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
               className="w-full p-4 border border-gray-500 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 focus:ring-2 focus:outline-none"
               required
               autoFocus
+              disabled={isSubmitting}
             />
           </div>
           <div className="flex justify-end space-x-3">
@@ -92,6 +102,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
               type="button"
               onClick={onClose}
               className="p-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none "
+              disabled={isSubmitting}
             >
               キャンセル
             </button>
