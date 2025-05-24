@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Prisma
 /src/lib/generated/prisma
+
+# AI generated images
+/public/gen

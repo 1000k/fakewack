@@ -1,24 +1,31 @@
 'use server';
 
-import { generateContent } from '@/lib/genai';
+import { generateContent, generateImage } from '@/lib/genai';
 import prisma from '@/lib/prisma';
 
 export async function createPost(content: string, userId: number) {
   try {
     // AIでコンテンツを生成
     const aiGeneratedContent = await generateContent(content);
-    
+
     if (!aiGeneratedContent) {
       throw new Error('AIによるコンテンツの生成に失敗しました');
     }
-    
+
+    const aiGeneratedImage = await generateImage(content);
+
+    if (!aiGeneratedImage) {
+      throw new Error('AIによる画像の生成に失敗しました');
+    }
+
     // データベースに投稿を作成
     const post = await prisma.post.create({
       data: {
         content: aiGeneratedContent.toString(),
+        image: aiGeneratedImage,
         user: {
-          connect: { id: userId }
-        }
+          connect: { id: userId },
+        },
       },
       include: {
         user: {
@@ -26,10 +33,10 @@ export async function createPost(content: string, userId: number) {
             id: true,
             username: true,
             displayName: true,
-            avatar: true
-          }
-        }
-      }
+            avatar: true,
+          },
+        },
+      },
     });
     console.log(post);
 

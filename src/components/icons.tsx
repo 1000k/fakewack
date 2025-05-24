@@ -36,10 +36,10 @@ export function IconComment() {
   );
 }
 
-export function IconDummyUser({name}: {name: string}) {
-    return (
-        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-                  <span className="text-gray-600 font-medium">{name.charAt(0)}</span>
-                </div>
-    )
+export function IconDummyUser({ name }: { name: string }) {
+  return (
+    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+      <span className="text-gray-600 font-medium">{name.charAt(0)}</span>
+    </div>
+  );
 }
