@@ -60,22 +60,24 @@ export async function generateImage(prompt: string): Promise<string> {
     });
     console.log(response);
 
-    if (response?.candidates?.length === 0) {
-      throw new Error('AIからのレスポンスが空です');
-    }
-    if (!response?.candidates?.[0]?.content) {
-      throw new Error('生成されたコンテンツがありません');
+    const parts = response?.candidates?.[0]?.content?.parts;
+
+    if (!parts || parts.length === 0) {
+      throw new Error('Image generation failed');
     }
 
-    const filename = `gen-${uuidv4()}.png`;
-
-    for (const part of response.candidates[0].content.parts) {
+    for (const part of parts) {
       if (part.text) {
         console.log(part.text);
       } else if (part.inlineData) {
         const imageData = part.inlineData.data;
-        const buffer = Buffer.from(imageData, 'base64');
 
+        if (!imageData) {
+          throw new Error('Image data is empty');
+        }
+
+        const buffer = Buffer.from(imageData, 'base64');
+        const filename = `gen-${uuidv4()}.png`;
         const targetDirectory = path.join(process.cwd(), 'public', 'gen');
         const fullPath = path.join(targetDirectory, filename);
 
@@ -85,11 +87,12 @@ export async function generateImage(prompt: string): Promise<string> {
 
         fs.writeFileSync(fullPath, buffer);
         console.log(`Image saved as "${fullPath}"`);
+
+        return filename;
       }
     }
-    return filename;
+    throw new Error('画像が生成されませんでした');
   } catch (error) {
-    console.error('Error generating image:', error);
-    throw new Error('画像の生成中にエラーが発生しました');
+    throw new Error('Error generating image:' + error);
   }
 }
