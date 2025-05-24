@@ -1,5 +1,6 @@
-export default function Create() {
-  return (
-    <div>Create Post</div>
-  )
+import { redirect } from 'next/navigation';
+
+export default function CreatePage() {
+  redirect('/');
+  return null;
 }

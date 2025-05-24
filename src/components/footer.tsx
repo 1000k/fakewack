@@ -1,6 +1,24 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { createPortal } from 'react-dom';
+import CreatePostModal from "./CreatePostModal";
 
 export default function Footer() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log('Footer rendered, isModalOpen:', isModalOpen);
+
+  const openModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log('Open modal button clicked');
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    console.log('Closing modal');
+    setIsModalOpen(false);
+  };
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t">
       <div className="max-w-2xl mx-auto flex justify-between px-4">
@@ -39,8 +57,11 @@ export default function Footer() {
             />
           </svg>
         </Link>
-        <Link
-          href="/create"
+        <button
+          onClick={(e) => {
+            console.log('Button clicked');
+            openModal(e);
+          }}
           className="p-4 text-gray-500 hover:text-indigo-600"
         >
           <svg
@@ -57,7 +78,7 @@ export default function Footer() {
               d="M12 4v16m8-8H4"
             />
           </svg>
-        </Link>
+        </button>
         {/* <Link href="/activity" className="p-4 text-gray-500 hover:text-indigo-600">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -83,6 +104,10 @@ export default function Footer() {
           </svg>
         </Link>
       </div>
+      {typeof window !== 'undefined' && createPortal(
+        <CreatePostModal isOpen={isModalOpen} onClose={closeModal} />,
+        document.body
+      )}
     </nav>
   );
 }
