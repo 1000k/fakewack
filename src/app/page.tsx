@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { IconComment, IconDummyUser, IconLike } from '@/components/icons';
 import prisma from '@/lib/prisma';
+import { formatWithLineBreaks } from '@/lib/utils';
 
 // 相対時間を日本語で表示する関数
 const formatTimeAgo = (date: Date): string => {
@@ -72,7 +73,9 @@ export default async function Home() {
                   <span className="text-gray-500 text-sm">@{post.user.username}</span>
                   <span className="text-gray-500 text-sm">・{formatTimeAgo(new Date(post.createdAt))}</span>
                 </div>
-                <p className="mt-1 text-gray-800">{post.content}</p>
+                <p className="mt-1 text-gray-800">
+                  {formatWithLineBreaks(post.content)}
+                </p>
                 <div className="mt-2 flex space-x-4 text-gray-500">
                   <Link 
                     href={`/post/${post.id}`}
