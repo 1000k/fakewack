@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "db": "podman-compose down --volumes && podman-compose up -d",
+    "db:seed": "npx tsx prisma/seeds.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
