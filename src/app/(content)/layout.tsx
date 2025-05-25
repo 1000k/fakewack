@@ -9,9 +9,7 @@ export default function ContentLayout({
   return (
     <>
       <Header />
-      <main className="max-w-2xl mx-auto flex justify-between px-4 py-4">
-        {children}
-      </main>
+      {children}
       <Footer />
     </>
   );

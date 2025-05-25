@@ -28,20 +28,22 @@ export default async function Home() {
 
   console.log('posts: ', posts);
   return (
-    <main className="bg-gray-100 w-full">
-      {posts.length === 0 ? (
-        <div className="text-center text-gray-500 m-12">
-          <p>投稿がありません</p>
-        </div>
-      ) : (
-        posts.map((post) => (
-          <Post
-            key={post.id}
-            post={post}
-            commentCounts={commentCounts}
-          />
-        ))
-      )}
+    <main className="max-w-2xl mx-auto flex justify-between px-4 py-4">
+      <div className="bg-gray-100 w-full">
+        {posts.length === 0 ? (
+          <div className="text-center text-gray-500 m-12">
+            <p>投稿がありません</p>
+          </div>
+        ) : (
+          posts.map((post) => (
+            <Post
+              key={post.id}
+              post={post}
+              commentCounts={commentCounts}
+            />
+          ))
+        )}
+      </div>
     </main>
   );
 }
