@@ -3,7 +3,10 @@
 import { generateContent, generateImage } from '@/lib/genai';
 import prisma from '@/lib/prisma';
 
-export async function createPost(content: string, userId: string) {
+export async function createPost(
+  content: string,
+  userId: string
+): Promise<boolean> {
   try {
     // AIでコンテンツを生成
     const aiGeneratedContent = await generateContent(content);
@@ -29,9 +32,9 @@ export async function createPost(content: string, userId: string) {
 
     console.log(post);
 
-    return { success: true, post };
+    return true;
   } catch (error) {
     console.error('Error creating post:', error);
-    return { success: false, error: '投稿の作成中にエラーが発生しました' };
+    throw error;
   }
 }
