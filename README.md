@@ -22,6 +22,14 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Development
+
+### After changing DB scheme
+
+```sh
+npx prisma migrate dev
+```
+
 ## Deploy on Vercel
 
 ### Migration to production DB
@@ -31,5 +39,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 3. Type the following command:
 
 ```
-NODE_ENV=production npx prisma migrate deploy
+dotenv -e .env.production -- npx prisma migrate deploy
 ```
