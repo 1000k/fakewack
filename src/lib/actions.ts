@@ -23,21 +23,10 @@ export async function createPost(content: string, userId: string) {
       data: {
         content: aiGeneratedContent.toString(),
         image: aiGeneratedImage,
-        user: {
-          connect: { id: userId },
-        },
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-            displayName: true,
-            avatar: true,
-          },
-        },
+        userId: userId,
       },
     });
+
     console.log(post);
 
     return { success: true, post };
