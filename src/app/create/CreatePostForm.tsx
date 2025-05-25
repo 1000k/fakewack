@@ -1,7 +1,6 @@
 'use client';
 import { useActionState } from 'react';
 import { LoadingSpinner } from '@/components/spinner';
-import Link from 'next/link';
 
 type Props = {
   action: (formData: FormData) => Promise<void>;
