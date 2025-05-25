@@ -1,25 +1,24 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import type { Metadata } from 'next';
+import './globals.css';
+import { SessionProvider } from 'next-auth/react';
+import { auth } from '@/lib/auth';
 
 export const metadata: Metadata = {
-  title: "fakewack",
-  description: "Making the world more boasting.",
+  title: 'fakewack',
+  description: 'Making the world more boasting.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en">
-      <body>
-        <Header />
-        <main className="max-w-2xl mx-auto flex justify-between px-4 py-4">{children}</main>
-        <Footer/>
-      </body> 
+      <SessionProvider session={session}>
+        <body>{children}</body>
+      </SessionProvider>
     </html>
   );
 }

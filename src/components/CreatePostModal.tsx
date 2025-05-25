@@ -2,6 +2,7 @@
 import { createPost } from '@/lib/actions';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -16,7 +17,9 @@ export default function CreatePostModal({
   const [isMounted, setIsMounted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { data: session, status } = useSession();
 
+  console.log('Session status: ', status);
   console.log('Modal rendering, isOpen:', isOpen, 'isMounted:', isMounted);
 
   useEffect(() => {
@@ -34,8 +37,10 @@ export default function CreatePostModal({
 
     setIsSubmitting(true);
     try {
-      // テスト用にユーザーIDを1に設定（実際のアプリでは認証情報から取得）
-      const userId = 1;
+      const userId = session?.user?.id;
+      if (!userId) {
+        throw new Error('ユーザーが見つかりません');
+      }
       const result = await createPost(content, userId);
 
       if (result.success) {
