@@ -43,13 +43,13 @@ export default function CreatePostModal({
       }
       const result = await createPost(content, userId);
 
-      if (result.success) {
+      if (result) {
         setContent('');
         onClose();
         // ページをリフレッシュして新しい投稿を表示
         router.refresh();
       } else {
-        alert('投稿に失敗しました: ' + result.error);
+        alert('投稿に失敗しました');
       }
     } catch (error) {
       console.error('Error:', error);

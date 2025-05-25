@@ -7,10 +7,13 @@ type Props = {
 };
 
 export default function CreatePostForm({ action }: Props) {
-  const [, formAction, pending] = useActionState(async (_state, formData) => {
-    await action(formData);
-    return null;
-  }, null);
+  const [, formAction, pending] = useActionState(
+    async (_state: unknown, formData: FormData) => {
+      await action(formData);
+      return null;
+    },
+    null
+  );
 
   return (
     <form action={formAction}>
