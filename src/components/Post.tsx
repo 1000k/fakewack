@@ -11,7 +11,7 @@ export default function Post({
   post,
   commentCounts,
 }: {
-  post: PostType;
+  post: PostType & { user: { name: string | null } };
   commentCounts: Record<number, number>;
 }) {
   return (
@@ -24,7 +24,7 @@ export default function Post({
           href={`/${post.user.name}`}
           className="flex-shrink-0"
         >
-          <IconDummyUser name={post.user.name} />
+          <IconDummyUser name={post.user.name || ''} />
         </Link>
         <div className="flex-1 min-w-0">
           <div className="flex items-center space-x-2">
