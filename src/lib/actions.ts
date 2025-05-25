@@ -3,7 +3,7 @@
 import { generateContent, generateImage } from '@/lib/genai';
 import prisma from '@/lib/prisma';
 
-export async function createPost(content: string, userId: number) {
+export async function createPost(content: string, userId: string) {
   try {
     // AIでコンテンツを生成
     const aiGeneratedContent = await generateContent(content);
