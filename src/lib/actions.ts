@@ -2,6 +2,7 @@
 
 import { generateContent, generateImage } from '@/lib/genai';
 import prisma from '@/lib/prisma';
+import { put } from '@vercel/blob';
 
 export async function createPost(
   content: string,
@@ -21,11 +22,19 @@ export async function createPost(
       throw new Error('AIによる画像の生成に失敗しました');
     }
 
+    // Vercel Blob にアップロードし、URLを取得
+    const blob = await put(aiGeneratedImage, aiGeneratedImage, {
+      access: 'public',
+      addRandomSuffix: true,
+    });
+
+    console.log(blob);
+
     // データベースに投稿を作成
     const post = await prisma.post.create({
       data: {
         content: aiGeneratedContent.toString(),
-        image: aiGeneratedImage,
+        image: blob.url,
         userId: userId,
       },
     });
