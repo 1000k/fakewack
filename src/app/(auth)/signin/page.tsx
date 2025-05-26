@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 import { signIn } from '@/lib/auth';
 import { IconGoogle } from '@/components/icons';
 
