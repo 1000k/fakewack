@@ -1,4 +1,24 @@
-import NextAuth from "next-auth"
-import authConfig from "@/lib/auth.config"
- 
-export const { auth: middleware } = NextAuth(authConfig)
+import { auth } from '@/lib/auth';
+import { NextResponse } from 'next/server';
+
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
+  const isAuthPage = req.nextUrl.pathname.startsWith('/signin');
+
+  if (isAuthPage) {
+    if (isLoggedIn) {
+      return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+    }
+  }
+
+  if (!isLoggedIn) {
+    return NextResponse.redirect(new URL('/signin', req.nextUrl.origin));
+  }
+});
+
+// Optionally, don't invoke Middleware on some paths
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
+};
