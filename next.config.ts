@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      { hostname: 'lh3.googleusercontent.com' },
+      {
+        hostname: process.env.BLOR_HOSTNAME as string,
+      },
+    ],
+  },
 };
 
 export default nextConfig;

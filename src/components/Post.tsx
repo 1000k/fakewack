@@ -43,7 +43,7 @@ export default function Post({
           {post.image && (
             <div className="flex items-center space-x-2">
               <Image
-                src={`/gen/${post.image}`}
+                src={post.image}
                 alt="sample"
                 width={512}
                 height={512}

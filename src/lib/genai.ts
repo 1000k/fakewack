@@ -1,9 +1,6 @@
 'use server';
 
 import { GoogleGenAI } from '@google/genai';
-import fs from 'fs';
-import * as path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -39,7 +36,7 @@ export async function generateContent(prompt: string): Promise<string> {
   }
 }
 
-export async function generateImage(prompt: string): Promise<string> {
+export async function generateImage(prompt: string): Promise<{ buffer: Buffer; mimeType: string }> {
   if (!prompt?.trim()) {
     throw new Error('プロンプトを入力してください');
   }
@@ -77,22 +74,12 @@ export async function generateImage(prompt: string): Promise<string> {
         }
 
         const buffer = Buffer.from(imageData, 'base64');
-        const filename = `gen-${uuidv4()}.png`;
-        const targetDirectory = path.join(process.cwd(), 'public', 'gen');
-        const fullPath = path.join(targetDirectory, filename);
-
-        if (!fs.existsSync(targetDirectory)) {
-          fs.mkdirSync(targetDirectory, { recursive: true });
-        }
-
-        fs.writeFileSync(fullPath, buffer);
-        console.log(`Image saved as "${fullPath}"`);
-
-        return filename;
+        return { buffer, mimeType: 'image/png' };
       }
     }
     throw new Error('画像が生成されませんでした');
   } catch (error) {
-    throw new Error('Error generating image:' + error);
+    console.error('Error generating image:', error);
+    throw new Error('画像の生成中にエラーが発生しました: ' + (error as Error).message);
   }
 }

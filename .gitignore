@@ -45,3 +45,4 @@ next-env.d.ts
 
 # AI generated images
 /public/gen
+.env*.local
