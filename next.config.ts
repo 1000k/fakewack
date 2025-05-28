@@ -5,9 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { hostname: 'lh3.googleusercontent.com' },
       {
-        protocol: 'https',
-        hostname: process.env.BLOR_HOSTNAME,
-        port: '',
+        hostname: process.env.BLOR_HOSTNAME as string,
       },
     ],
   },
