@@ -6,13 +6,13 @@ export default async function UploadForm() {
   async function uploadImage(formData: FormData) {
     "use server";
     const imageFile = formData.get("image") as File;
-    const blob = await put(imageFile.name, imageFile, {
-      access: "public",
-      addRandomSuffix: true,
-    });
-    revalidatePath("/");
-    console.log(blob);
-    return blob;
+    if (imageFile) {
+      await put(imageFile.name, imageFile, {
+        access: "public",
+        addRandomSuffix: true,
+      });
+      revalidatePath("/");
+    }
   }
 
   async function allImages() {
