@@ -6,7 +6,7 @@ import { put } from '@vercel/blob';
 
 export async function createPost(
   content: string,
-  userId: string
+  userId: string,
 ): Promise<boolean> {
   try {
     // AIでコンテンツを生成
@@ -25,10 +25,12 @@ export async function createPost(
 
     // 画像をVercel Blobにアップロード
     const filename = `images/${Date.now()}-${Math.random().toString(36).substring(2, 15)}.png`;
-    
+
     // BufferをBlobに変換
-    const blobData = new Blob([aiGeneratedImage.buffer], { type: aiGeneratedImage.mimeType });
-    
+    const blobData = new Blob([aiGeneratedImage.buffer], {
+      type: aiGeneratedImage.mimeType,
+    });
+
     // Vercel Blobにアップロード
     const blob = await put(filename, blobData, {
       access: 'public',
@@ -39,7 +41,7 @@ export async function createPost(
     console.log('Image uploaded to Vercel Blob:', blob);
 
     // データベースに投稿を作成
-    console.log("userId: ", userId);
+    console.log('userId: ', userId);
 
     const post = await prisma.post.create({
       data: {
@@ -53,6 +55,8 @@ export async function createPost(
     return true;
   } catch (error) {
     console.error('Error creating post:', error);
-    throw new Error('投稿の作成中にエラーが発生しました: ' + (error as Error).message);
+    throw new Error(
+      '投稿の作成中にエラーが発生しました: ' + (error as Error).message,
+    );
   }
 }
