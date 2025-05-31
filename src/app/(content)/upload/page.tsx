@@ -1,17 +1,17 @@
-import { put, list } from "@vercel/blob";
-import { revalidatePath } from "next/cache";
-import Image from "next/image";
+import { put, list } from '@vercel/blob';
+import { revalidatePath } from 'next/cache';
+import Image from 'next/image';
 
 export default async function UploadForm() {
   async function uploadImage(formData: FormData) {
-    "use server";
-    const imageFile = formData.get("image") as File;
+    'use server';
+    const imageFile = formData.get('image') as File;
     if (imageFile) {
       await put(imageFile.name, imageFile, {
-        access: "public",
+        access: 'public',
         addRandomSuffix: true,
       });
-      revalidatePath("/");
+      revalidatePath('/');
     }
   }
 
@@ -25,7 +25,12 @@ export default async function UploadForm() {
     <>
       <form action={uploadImage}>
         <label htmlFor="image">Image</label>
-        <input type="file" id="image" name="image" required />
+        <input
+          type="file"
+          id="image"
+          name="image"
+          required
+        />
         <button>Upload</button>
       </form>
 

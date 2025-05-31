@@ -36,7 +36,9 @@ export async function generateContent(prompt: string): Promise<string> {
   }
 }
 
-export async function generateImage(prompt: string): Promise<{ buffer: Buffer; mimeType: string }> {
+export async function generateImage(
+  prompt: string,
+): Promise<{ buffer: Buffer; mimeType: string }> {
   if (!prompt?.trim()) {
     throw new Error('プロンプトを入力してください');
   }
@@ -80,6 +82,8 @@ export async function generateImage(prompt: string): Promise<{ buffer: Buffer; m
     throw new Error('画像が生成されませんでした');
   } catch (error) {
     console.error('Error generating image:', error);
-    throw new Error('画像の生成中にエラーが発生しました: ' + (error as Error).message);
+    throw new Error(
+      '画像の生成中にエラーが発生しました: ' + (error as Error).message,
+    );
   }
 }

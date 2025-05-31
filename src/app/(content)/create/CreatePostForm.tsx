@@ -1,6 +1,6 @@
-"use client";
-import { useActionState } from "react";
-import { LoadingSpinner } from "@/components/spinner";
+'use client';
+import { useActionState } from 'react';
+import { LoadingSpinner } from '@/components/spinner';
 
 type Props = {
   action: (formData: FormData) => Promise<void>;
@@ -12,7 +12,7 @@ export default function CreatePostForm({ action }: Props) {
       await action(formData);
       return null;
     },
-    null
+    null,
   );
 
   return (
