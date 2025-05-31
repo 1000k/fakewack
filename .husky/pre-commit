@@ -1,1 +1,2 @@
-npm test
+dotenv -e .env.development -- npm run lint
+dotenv -e .env.development -- npm test
