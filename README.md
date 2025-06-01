@@ -9,9 +9,7 @@
 Initialize database:
 
 ```sh
-npm run db
-npx prisma migrate dev --name init
-npm run db:seed
+npm run db:startup
 ```
 
 Then launch dev server:
