@@ -33,21 +33,12 @@ export default function SignIn() {
               await signIn('credentials', formData);
             }}
           >
-            <label>
-              id
-              <input
-                name="id"
-                type="text"
-              />
-            </label>
-            <label>
-              Password
-              <input
-                name="password"
-                type="password"
-              />
-            </label>
-            <button>Sign In</button>
+            <button
+              className="text-white bg-slate-500 hover:bg-slate-600 focus:ring-4 focus:outline-none focus:ring-slate-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-slate-500/55 me-2 mb-2"
+              data-test="dummy_signin"
+            >
+              Dummy Sign In
+            </button>
           </form>
         )}
       </div>
