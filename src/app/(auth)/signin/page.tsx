@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 import { signIn } from '@/lib/auth';
 import { IconGoogle } from '@/components/icons';
 
-export default function Login() {
+export default function SignIn() {
   return (
     // 画面中央に配置
     <main className="flex justify-center items-center h-svh">
@@ -25,6 +25,31 @@ export default function Login() {
             Sign in with Google
           </button>
         </form>
+
+        {process.env.NODE_ENV === 'development' && (
+          <form
+            action={async (formData) => {
+              'use server';
+              await signIn('credentials', formData);
+            }}
+          >
+            <label>
+              id
+              <input
+                name="id"
+                type="text"
+              />
+            </label>
+            <label>
+              Password
+              <input
+                name="password"
+                type="password"
+              />
+            </label>
+            <button>Sign In</button>
+          </form>
+        )}
       </div>
     </main>
   );

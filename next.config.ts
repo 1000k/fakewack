@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
       { hostname: 'lh3.googleusercontent.com' },
       {
         hostname: process.env.BLOR_HOSTNAME as string,
+      },
+      {
+        hostname: 'avatars.githubusercontent.com',
       },
     ],
   },
