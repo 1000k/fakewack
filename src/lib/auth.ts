@@ -12,6 +12,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         // user is the user object from the database
         token.user = user;
+        console.log('JWT Callback:', token);
       }
       return token;
     },

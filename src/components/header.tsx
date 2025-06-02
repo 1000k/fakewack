@@ -12,7 +12,10 @@ export default async function Header() {
   return (
     <header className="bg-white shadow-sm w-full">
       <div className="max-w-2xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">
+        <h1
+          className="text-xl font-bold"
+          data-test="header-username"
+        >
           {authed ? session.user?.name : 'fakewack'}
         </h1>
         <div className="flex space-x-4">
